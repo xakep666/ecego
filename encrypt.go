@@ -161,7 +161,7 @@ func isLastBlock(pad, blockEnd, contentLen uint32, params OperationalParams) boo
 		lastBlock = blockEnd >= contentLen
 	}
 
-	lastBlock = lastBlock && pad <= 0
+	lastBlock = lastBlock && pad == 0
 	return lastBlock
 }
 

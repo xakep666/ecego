@@ -36,7 +36,7 @@ const (
 
 const (
 	DefaultRecordSize uint32 = 4096
-	DefaultKeyLabel          = "P-256"
+	DefaultKeyLabel   string = "P-256"
 )
 
 // aes128gcm content header format from RFC8188:

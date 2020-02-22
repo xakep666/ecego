@@ -365,12 +365,6 @@ func TestDH(t *testing.T) {
 	f(ecego.AESGCM)
 }
 
-type errorIsEq struct{ error }
-
-func (e errorIsEq) Is(err error) bool { return e.Error() == err.Error() }
-
-func (e errorIsEq) Unwrap() error { return e.error }
-
 func TestErrorsDecrypt(t *testing.T) {
 	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
