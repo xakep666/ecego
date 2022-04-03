@@ -16,10 +16,6 @@ var (
 
 // Decrypt takes input cipher text, decrypts it using provided parameters and appends result to target
 func (e *Engine) Decrypt(content, target []byte, params OperationalParams) ([]byte, error) {
-	if len(params.Salt) != saltSize {
-		return nil, ErrInvalidSaltSize
-	}
-
 	if params.RecordSize == 0 {
 		params.RecordSize = DefaultRecordSize
 	}
@@ -41,6 +37,10 @@ func (e *Engine) Decrypt(content, target []byte, params OperationalParams) ([]by
 			// Public key may be in KeyID
 			params.DH = params.KeyID
 		}
+	}
+	
+	if len(params.Salt) != saltSize {
+		return nil, ErrInvalidSaltSize
 	}
 
 	publicKey := e.publicKey(params)
