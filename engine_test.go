@@ -17,7 +17,7 @@ import (
 )
 
 func TestExamples(t *testing.T) {
-	// Based on examples from RFC8118
+	// Based on examples from RFC8188
 	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
 		t.Errorf("Private key generate failed: %v", err)
@@ -408,6 +408,7 @@ func TestErrorsDecrypt(t *testing.T) {
 			0xbb, 0xe2, 0x31, 0x90, 0x8b, 0xda, 0xdc, 0xc1, 0x1, 0xd4, 0xf0, 0xfe, 0x97, 0x2f, 0x13, 0x86, 0x38,
 		},
 		ecego.OperationalParams{
+			Version:   ecego.AESGCM,
 			StaticKey: generateKey(t),
 			DH:        elliptic.Marshal(privateKey.Curve, privateKey.X, privateKey.Y),
 			Salt:      []byte{1, 2, 3, 4, 5, 6},
