@@ -44,6 +44,7 @@ const (
 // | salt (16) | rs (4) | idlen (1) | keyid (idlen) |
 // +-----------+--------+-----------+---------------+
 const (
+	secretSize     = 32
 	saltSize       = 16
 	recordSizeSize = 4
 	idLenSize      = 1
@@ -155,7 +156,9 @@ func (e *Engine) deriveSharedSecret(params OperationalParams, publicKey *ecdsa.P
 	privateKey := e.keyLookupFunc(params.KeyID)
 	x, _ := privateKey.Curve.ScalarMult(publicKey.X, publicKey.Y, privateKey.D.Bytes())
 	// RFC5903 Section 9 states we should only return x.
-	return x.Bytes(), nil
+	result := x.Bytes()
+	result = append(bytes.Repeat([]byte{0}, secretSize-len(result)), result...)
+	return result, nil
 }
 
 func (e *Engine) buildInfo(base string, infoContext []byte) []byte {
